@@ -11,6 +11,9 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
+    width: "100%",
+    maxWidth: 500,
+    boxSizing: "border-box",
   },
   closeIcon: {
     display: "flex",
@@ -19,11 +22,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "16px",
     height: "16px",
   },
-  container: {
-    padding: theme.spacing(1),
-    "& > *": {
-      marginBottom: theme.spacing(2),
-    },
+  titleText: {
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -32,10 +32,10 @@ const BaseModal = ({ isOpen, titleText, children }: Props) => {
   return (
     <Dialog open={isOpen} classes={{ paper: classes.root }}>
       <Close className={classes.closeIcon} color="secondary" />
-      <Typography variant="h3" align="center">
+      <Typography variant="h3" align="center" className={classes.titleText}>
         {titleText}
       </Typography>
-      <div className={classes.container}>{children}</div>
+      <div>{children}</div>
     </Dialog>
   );
 };
