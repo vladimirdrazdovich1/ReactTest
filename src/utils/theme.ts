@@ -115,6 +115,16 @@ const theme: AppTheme = {
       notchedOutline: {
         borderColor: "#DADCE0",
       },
+      error: {
+        "&.MuiFormHelperText-root.Mui-error": {
+          marginLeft: 0,
+        },
+      },
+    },
+    MuiFormHelperText: {
+      contained: {
+        marginLeft: 0,
+      },
     },
     MuiButton: {
       root: {
