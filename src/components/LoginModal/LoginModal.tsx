@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
 import * as Yup from "yup";
 import {
   TextField,
@@ -8,6 +9,7 @@ import {
   Grid,
   FormControlLabel,
   Checkbox,
+  InputAdornment,
   makeStyles,
   Theme,
 } from "@material-ui/core";
@@ -24,6 +26,7 @@ interface Props {
 type ValidationData = {
   email: string;
   password: string;
+  rememberMe: boolean;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -31,6 +34,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     "& > *": {
       marginBottom: theme.spacing(2),
     },
+  },
+  showPasswordBtn: {
+    backgroundColor: "#F3F5F9",
+    borderRadius: 15,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
 }));
 
@@ -41,17 +50,29 @@ const validationSchema = Yup.object({
     .required("Password is required")
     .matches(/^(?=.*[a-zA-Z]).+$/, "Password must contain at least 1 alphabetic character")
     .matches(/\d/, "Password must contain at least 1 number"),
+  rememberMe: Yup.boolean(),
 });
 
 const initialValues = {
   email: "",
   password: "",
+  rememberMe: false,
 } as ValidationData;
 
 const LoginModal = ({ isOpen, onClose }: Props) => {
+  const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const history = useHistory();
+
   const classes = useStyles();
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    history.push("/profile");
+  };
+
+  const toggleShowingPassword = () => {
+    setIsShowPassword(!isShowPassword);
+  };
 
   return (
     <BaseModal isOpen={isOpen} onClose={onClose} titleText="Login">
@@ -70,11 +91,20 @@ const LoginModal = ({ isOpen, onClose }: Props) => {
           component={TextField}
         />
         <Field
-          type="password"
+          type={isShowPassword ? "text" : "password"}
           variant="outlined"
           placeholder="Password"
           name="password"
           margin="none"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button onClick={toggleShowingPassword} className={classes.showPasswordBtn} disableElevation>
+                  Show
+                </Button>
+              </InputAdornment>
+            ),
+          }}
           fullWidth
           component={TextField}
         />

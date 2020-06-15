@@ -38,14 +38,14 @@ const SocialButtons = () => {
   const classes = useStyles();
   return (
     <>
-      <Grid container direction="row" justify="space-around" alignItems="center" xs={12}>
+      <Grid container item direction="row" justify="space-around" alignItems="center" xs={12}>
         <Divider variant="middle" className={classes.divider} />
         <Typography variant="h5" className={classes.separatorOr} color="textSecondary">
           Or
         </Typography>
         <Divider variant="middle" className={classes.divider} />
       </Grid>
-      <Grid container justify="space-between" xs={12}>
+      <Grid container item justify="space-between" xs={12}>
         <Button variant="contained" color="primary" disableElevation className={classes.facebookBtn}>
           <Icon className="fa fa-facebook-f" />
           Facebook

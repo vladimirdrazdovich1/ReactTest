@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
-import { TextField, Button, Typography, Link, makeStyles, Theme } from "@material-ui/core";
+import { TextField, Button, Typography, Link, InputAdornment, makeStyles, Theme } from "@material-ui/core";
 import BaseModal from "components/BaseModal";
 import SocialButtons from "components/SocialButtons";
 import Form from "components/Form";
 import Field from "components/Field";
+import { useHistory } from "react-router";
+import CheckEmailModal from "components/CheckEmailModal";
 
 interface Props {
   isOpen: boolean;
@@ -36,6 +38,12 @@ const useStyles = makeStyles((theme: Theme) => ({
       marginLeft: 10,
     },
   },
+  showPasswordBtn: {
+    backgroundColor: "#F3F5F9",
+    borderRadius: 15,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
 }));
 
 const validationSchema = Yup.object({
@@ -57,9 +65,29 @@ const initialValues = {
 } as ValidationData;
 
 const SignUpModal = ({ isOpen, onClose }: Props) => {
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isShowConfirmation, setIsShowConfirmation] = useState(false);
+
+  const history = useHistory();
+
   const classes = useStyles();
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    setIsShowConfirmation(true);
+  };
+
+  const handleCloseConfirmation = () => {
+    setIsShowConfirmation(false);
+  };
+
+  const onVerifyCode = () => {
+    handleCloseConfirmation();
+    history.push("/profile");
+  };
+
+  const toggleShowingPassword = () => {
+    setIsShowPassword(!isShowPassword);
+  };
 
   return (
     <BaseModal isOpen={isOpen} onClose={onClose} titleText="Sign up">
@@ -96,11 +124,20 @@ const SignUpModal = ({ isOpen, onClose }: Props) => {
           component={TextField}
         />
         <Field
-          type="password"
+          type={isShowPassword ? "text" : "password"}
           variant="outlined"
           placeholder="Password"
           name="password"
           margin="none"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button onClick={toggleShowingPassword} className={classes.showPasswordBtn} disableElevation>
+                  Show
+                </Button>
+              </InputAdornment>
+            ),
+          }}
           fullWidth
           component={TextField}
         />
@@ -115,6 +152,7 @@ const SignUpModal = ({ isOpen, onClose }: Props) => {
           </Link>
         </Typography>
       </Form>
+      <CheckEmailModal isOpen={isShowConfirmation} onClose={handleCloseConfirmation} onVerify={onVerifyCode} />
     </BaseModal>
   );
 };

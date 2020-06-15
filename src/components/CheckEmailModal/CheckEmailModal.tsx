@@ -9,6 +9,7 @@ import Field from "components/Field";
 interface Props {
   isOpen: boolean;
   onClose?: () => void;
+  onVerify: () => void;
 }
 
 type ValidationData = {
@@ -31,10 +32,12 @@ const initialValues = {
   code: "",
 } as ValidationData;
 
-const CheckEmailModal = ({ isOpen, onClose }: Props) => {
+const CheckEmailModal = ({ isOpen, onClose, onVerify }: Props) => {
   const classes = useStyles();
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    onVerify();
+  };
 
   return (
     <BaseModal isOpen={isOpen} onClose={onClose} titleText="Check your email">
@@ -50,7 +53,7 @@ const CheckEmailModal = ({ isOpen, onClose }: Props) => {
           Verify
         </Button>
         <Grid container justify="space-between">
-          <Button variant="text" color="secondary">
+          <Button variant="text" color="secondary" onClick={onClose}>
             <KeyboardBackspace />
             Back
           </Button>
