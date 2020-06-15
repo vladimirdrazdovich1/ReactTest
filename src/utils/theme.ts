@@ -132,6 +132,9 @@ const theme: AppTheme = {
           backgroundColor: "#CBD7E0",
         },
       },
+      text: {
+        fontWeight: 400,
+      },
     },
     MuiCheckbox: {
       root: {

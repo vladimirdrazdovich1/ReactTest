@@ -12,6 +12,8 @@ interface Props {
 }
 
 type ValidationData = {
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 };
