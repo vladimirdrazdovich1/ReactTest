@@ -10,12 +10,11 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     background: `url(${backgroundImage}) no-repeat center center`,
     backgroundSize: "cover",
-    padding: theme.spacing(8),
     boxSizing: "border-box",
     overflowY: "auto",
   },
   grid: {
-    height: "100%",
+    padding: theme.spacing(8),
   },
   btn: {
     color: "white",
