@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: theme.zIndex.modal - 2,
   },
+  modal: {
+    zIndex: theme.zIndex.modal,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
 }));
 
 const Login = () => {
@@ -89,8 +95,10 @@ const Login = () => {
             Sign Up
           </Button>
         </div>
-        <LoginModal isOpen={isShowLogin} onClose={handleCloseLogin} />
-        <SignUpModal isOpen={isShowSignUp} onClose={handleCloseSignUp} onOpen={handleClickSignUp} />
+        <div className={classes.modal}>
+          <LoginModal isOpen={isShowLogin} onClose={handleCloseLogin} />
+          <SignUpModal isOpen={isShowSignUp} onClose={handleCloseSignUp} onOpen={handleClickSignUp} />
+        </div>
       </Grid>
     </div>
   );
