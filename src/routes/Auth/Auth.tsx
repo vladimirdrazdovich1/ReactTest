@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   grid: {
     padding: theme.spacing(8),
+    minHeight: "100%",
   },
   btn: {
     color: "white",
