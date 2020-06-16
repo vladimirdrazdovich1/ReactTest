@@ -27,11 +27,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const BaseModal = ({ isOpen, titleText, children }: Props) => {
+const BaseModal = ({ isOpen, onClose, titleText, children }: Props) => {
   const classes = useStyles();
   return (
     <Dialog open={isOpen} classes={{ paper: classes.root }}>
-      <Close className={classes.closeIcon} color="secondary" />
+      <Close className={classes.closeIcon} color="secondary" onClick={onClose} />
       <Typography variant="h3" align="center" className={classes.titleText}>
         {titleText}
       </Typography>

@@ -10,7 +10,9 @@ import CheckEmailModal from "components/CheckEmailModal";
 
 interface Props {
   isOpen: boolean;
-  onClose?: () => void;
+  onClose: () => void;
+  onOpen: () => void;
+  className?: string;
 }
 
 type ValidationData = {
@@ -64,7 +66,7 @@ const initialValues = {
   password: "",
 } as ValidationData;
 
-const SignUpModal = ({ isOpen, onClose }: Props) => {
+const SignUpModal = ({ isOpen, onClose, onOpen, className }: Props) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfirmation, setIsShowConfirmation] = useState(false);
 
@@ -73,10 +75,12 @@ const SignUpModal = ({ isOpen, onClose }: Props) => {
   const classes = useStyles();
 
   const handleSubmit = () => {
+    onClose();
     setIsShowConfirmation(true);
   };
 
   const handleCloseConfirmation = () => {
+    onOpen();
     setIsShowConfirmation(false);
   };
 
@@ -90,70 +94,72 @@ const SignUpModal = ({ isOpen, onClose }: Props) => {
   };
 
   return (
-    <BaseModal isOpen={isOpen} onClose={onClose} titleText="Sign up">
-      <Form
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-        className={classes.root}
-      >
-        <div className={classes.twoCols}>
+    <>
+      <BaseModal isOpen={isOpen} onClose={onClose} titleText="Sign up" className={className}>
+        <Form
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+          className={classes.root}
+        >
+          <div className={classes.twoCols}>
+            <Field
+              variant="outlined"
+              placeholder="First Name"
+              name="firstName"
+              margin="none"
+              fullWidth
+              component={TextField}
+            />
+            <Field
+              variant="outlined"
+              placeholder="Last Name"
+              name="lastName"
+              margin="none"
+              fullWidth
+              component={TextField}
+            />
+          </div>
           <Field
             variant="outlined"
-            placeholder="First Name"
-            name="firstName"
+            placeholder="Email Address"
+            name="email"
             margin="none"
             fullWidth
             component={TextField}
           />
           <Field
+            type={isShowPassword ? "text" : "password"}
             variant="outlined"
-            placeholder="Last Name"
-            name="lastName"
+            placeholder="Password"
+            name="password"
             margin="none"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button onClick={toggleShowingPassword} className={classes.showPasswordBtn} disableElevation>
+                    Show
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
             fullWidth
             component={TextField}
           />
-        </div>
-        <Field
-          variant="outlined"
-          placeholder="Email Address"
-          name="email"
-          margin="none"
-          fullWidth
-          component={TextField}
-        />
-        <Field
-          type={isShowPassword ? "text" : "password"}
-          variant="outlined"
-          placeholder="Password"
-          name="password"
-          margin="none"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Button onClick={toggleShowingPassword} className={classes.showPasswordBtn} disableElevation>
-                  Show
-                </Button>
-              </InputAdornment>
-            ),
-          }}
-          fullWidth
-          component={TextField}
-        />
-        <Button type="submit" variant="contained" color="primary" fullWidth disableElevation>
-          Sign Up
-        </Button>
-        <SocialButtons />
-        <Typography variant="h5" align="center">
-          Already have an account?{" "}
-          <Link href="#" color="primary">
-            Login
-          </Link>
-        </Typography>
-      </Form>
+          <Button type="submit" variant="contained" color="primary" fullWidth disableElevation>
+            Sign Up
+          </Button>
+          <SocialButtons />
+          <Typography variant="h5" align="center">
+            Already have an account?{" "}
+            <Link href="#" color="primary">
+              Login
+            </Link>
+          </Typography>
+        </Form>
+      </BaseModal>
       <CheckEmailModal isOpen={isShowConfirmation} onClose={handleCloseConfirmation} onVerify={onVerifyCode} />
-    </BaseModal>
+    </>
   );
 };
 

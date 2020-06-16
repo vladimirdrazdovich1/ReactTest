@@ -63,9 +63,9 @@ const Login = () => {
         <Button variant="outlined" size="large" className={classes.btn} onClick={handleClickSignUp}>
           Sign Up
         </Button>
-        <LoginModal isOpen={isShowLogin} onClose={handleCloseLogin} />
-        <SignUpModal isOpen={isShowSignUp} onClose={handleCloseSignUp} />
       </div>
+      <LoginModal isOpen={isShowLogin} onClose={handleCloseLogin} />
+      <SignUpModal isOpen={isShowSignUp} onClose={handleCloseSignUp} onOpen={handleClickSignUp} />
       <Backdrop open />
     </div>
   );
