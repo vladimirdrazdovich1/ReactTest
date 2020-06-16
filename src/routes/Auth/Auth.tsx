@@ -44,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.modal - 2,
   },
   modal: {
+    flex: 1,
+    width: "100%",
     zIndex: theme.zIndex.modal,
     display: "flex",
     flexDirection: "column",
