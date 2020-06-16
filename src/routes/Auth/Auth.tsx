@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles, Button, Backdrop } from "@material-ui/core";
+import { makeStyles, Button, Grid } from "@material-ui/core";
 import LoginModal from "components/LoginModal";
 import SignUpModal from "components/SignUpModal";
 import backgroundImage from "assets/bg.png";
@@ -10,23 +10,38 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     background: `url(${backgroundImage}) no-repeat center center`,
     backgroundSize: "cover",
+    padding: theme.spacing(8),
+    boxSizing: "border-box",
+    overflowY: "auto",
+  },
+  grid: {
+    height: "100%",
   },
   btn: {
     color: "white",
     borderColor: "white",
-    zIndex: 2000,
     width: 162,
   },
   btnGroup: {
     display: "flex",
+    marginBottom: theme.spacing(8),
     justifyContent: "center",
-    paddingTop: theme.spacing(16),
+    zIndex: theme.zIndex.modal - 1,
     "& > *:first-child": {
       marginRight: 25,
     },
     "& > *:last-child": {
       marginLeft: 25,
     },
+  },
+  dimming: {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    position: "fixed",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: theme.zIndex.modal - 2,
   },
 }));
 
@@ -56,17 +71,27 @@ const Login = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.btnGroup}>
-        <Button variant="outlined" size="large" className={classes.btn} onClick={handleClickLogin}>
-          Login
-        </Button>
-        <Button variant="outlined" size="large" className={classes.btn} onClick={handleClickSignUp}>
-          Sign Up
-        </Button>
-      </div>
-      <LoginModal isOpen={isShowLogin} onClose={handleCloseLogin} />
-      <SignUpModal isOpen={isShowSignUp} onClose={handleCloseSignUp} onOpen={handleClickSignUp} />
-      <Backdrop open />
+      <div className={classes.dimming} />
+      <Grid
+        container
+        item
+        direction="column"
+        justify="center"
+        alignItems="center"
+        wrap="nowrap"
+        className={classes.grid}
+      >
+        <div className={classes.btnGroup}>
+          <Button variant="outlined" size="large" className={classes.btn} onClick={handleClickLogin}>
+            Login
+          </Button>
+          <Button variant="outlined" size="large" className={classes.btn} onClick={handleClickSignUp}>
+            Sign Up
+          </Button>
+        </div>
+        <LoginModal isOpen={isShowLogin} onClose={handleCloseLogin} />
+        <SignUpModal isOpen={isShowSignUp} onClose={handleCloseSignUp} onOpen={handleClickSignUp} />
+      </Grid>
     </div>
   );
 };

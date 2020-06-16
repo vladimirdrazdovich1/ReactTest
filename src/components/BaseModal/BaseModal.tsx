@@ -1,5 +1,5 @@
 import React, { HTMLAttributes } from "react";
-import { Dialog, Typography, makeStyles, Theme } from "@material-ui/core";
+import { Typography, makeStyles, Theme, Paper } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -14,11 +14,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     maxWidth: 500,
     boxSizing: "border-box",
+    alignSelf: "center",
+    justifyContent: "center",
+    zIndex: theme.zIndex.modal,
   },
   closeIcon: {
     display: "flex",
-    flexDirection: "column",
-    alignSelf: "flex-end",
+    marginLeft: "auto",
     width: "16px",
     height: "16px",
   },
@@ -29,14 +31,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const BaseModal = ({ isOpen, onClose, titleText, children }: Props) => {
   const classes = useStyles();
+
+  if (!isOpen) return null;
+
   return (
-    <Dialog open={isOpen} classes={{ paper: classes.root }}>
+    <Paper classes={{ root: classes.root }}>
       <Close className={classes.closeIcon} color="secondary" onClick={onClose} />
       <Typography variant="h3" align="center" className={classes.titleText}>
         {titleText}
       </Typography>
       <div>{children}</div>
-    </Dialog>
+    </Paper>
   );
 };
 
